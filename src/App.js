@@ -11,7 +11,8 @@ class App extends Component {
         super();
         this.state = {
             projects: [],
-            todos:[]
+            todos:[],
+            isEditing: false
         }
     }
 
@@ -22,7 +23,7 @@ class App extends Component {
             cache: false,
             success: function(data){
                 this.setState({todos: data}, function(){
-                    console.log(this.state);
+                    //console.log(this.state);
                 });
             }.bind(this),
             error: function(xhr, status, err){
@@ -73,11 +74,16 @@ class App extends Component {
         this.setState({projects:projects});
     }
 
+    handleEditProject(id) {
+        this.setState({isEditing: true});
+        console.log(this.state);
+    }
+
     render() {
         return (
             <div className="App">
                 <AddProject addProject={this.handleAddProject.bind(this)} />
-                <Projects projects={this.state.projects} onDelete={this.handleDeleteProject.bind(this)} /><hr />
+                <Projects projects={this.state.projects} onEdit={this.handleEditProject.bind(this)} onDelete={this.handleDeleteProject.bind(this)} /><hr />
                 <Todos todos={this.state.todos} />
             </div>
         );
